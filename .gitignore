@@ -479,3 +479,11 @@ Gemfile*
 ansible-role-tmux/
 boss-ansible-role-debug/
 zzet.rbenv/
+roles
+
+boss-ansible-role-debug
+ansible-role-tmux
+ansible-role-tmuxinator
+ansible-role-oh-my-zsh
+zzet.rbenv
+ansible-fail2ban

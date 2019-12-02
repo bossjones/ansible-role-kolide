@@ -142,6 +142,7 @@ lint: ## run molecule lint
 	molecule --debug lint
 
 download-roles-force: ## download any ansible roles that we might need
+#	ansible-galaxy install -r requirements.yml --force --roles-path ./roles/
 	ansible-galaxy install -r requirements.yml --force
 
 pre-commit-run: ## pre-commit cli run all hooks

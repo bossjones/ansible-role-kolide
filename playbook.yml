@@ -77,6 +77,7 @@
     - openssl-devel
     - readline-devel
     - zlib-devel
+    bossjones__oh__my__zsh__install_fzf: "no"
     bossjones__oh__my__zsh__enable_zlogin: "yes"
     bossjones__oh__my__zsh__enable_zlogout: "yes"
     bossjones__oh__my__zsh__enable_zprofile: "no"

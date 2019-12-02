@@ -198,18 +198,18 @@ Vagrant.configure(2) do |config|
       vm_config.vbguest.auto_update = true
 
       vm_config.vm.box = settings[:box]
-      vm_config.disksize.size = '15GB'
+      vm_config.disksize.size = '25GB'
 
       # config.vm.box_version = settings[:box_version]
       vm_config.vm.network 'private_network', ip: settings[:eth1]
-
+      vm_config.vm.network "forwarded_port", guest: 80, host: 8080
 
       vm_config.vm.hostname = settings[:hostname]
 
       config.vm.provider 'virtualbox' do |v|
         # make sure that the name makes sense when seen in the vbox GUI
         v.name = settings[:hostname]
-        # v.vm.forward_port 5901, 6901
+        # v.vm.forward_port 8080, 8080
 
         v.gui = false
         v.customize ['modifyvm', :id, '--memory', settings[:mem]]
