@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+# default vars for  ansible-role-kolide
+---
+# Suggested ansible variable namespace: behance__oh__my__bossjones__kolide___
+
+bossjones__kolide__path_to_kolide_config:
+  - { user: "vagrant", dir: "/home/vagrant" }
+
+bossjones__kolide__user: "vagrant"
+
+bossjones__kolide__rbenv:
+  env: "system"
+
+bossjones__kolide__rbenv_root: "{% if bossjones__kolide__rbenv.env == 'system' %}/usr/local/rbenv{% else %}~/.rbenv{% endif %}"
+
+bossjones__kolide__ruby_version: "2.5.1"

@@ -1,0 +1,25 @@
+# https://gist.github.com/gnarf/b103e77f37236ca72d8e
+# SOURCE: \cat roles/*/vagrant-config.yml | pbcopy
+:vms:
+  ubuntu-kolide:
+    :hostname: "ubuntu-kolide"
+    :name: "ubuntu-kolide"
+    :type: "master"
+    :box: "ubuntu/bionic64"
+    :eth1: "192.168.10.16"
+    :ip: "192.168.10.16"
+    :mem: 2048
+    :ram: 2048
+    :cpu: 2
+    :id: 10
+  fedora-kolide:
+    :hostname: "fedora-kolide"
+    :name: "fedora-kolide"
+    :type: "master"
+    :box: "fedora/29-cloud-base"
+    :eth1: "192.168.10.17"
+    :ip: "192.168.10.17"
+    :mem: 2048
+    :ram: 2048
+    :cpu: 2
+    :id: 11
