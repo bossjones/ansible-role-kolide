@@ -1,66 +1,11 @@
 # -*- coding: utf-8 -*-
 # tasks for  ansible-role-kolide
 ---
-# - name: Ensure group "rbenvgrp" exists
-#   group:
-#     name: rbenvgrp
-#     state: present
-
-# - name: Check groups that user belongs to already
-#   shell: "groups"
-#   failed_when: false
-#   changed_when: false
-#   check_mode: no
-#   become: yes
-#   become_user: "{{bossjones__kolide__user}}"
-#   register: bossjones__kolide_user_groups
-
-# - debug:
-#     var: bossjones__kolide_user_groups.stdout | replace(" ", ",")
-
-
-# - name: "Add the user {{bossjones__kolide__user}}, appending the group 'rbenvgrp' to the user's groups"
-#   user:
-#     name: "{{bossjones__kolide__user}}"
-#     groups: "rbenvgrp"
-#     append: yes
-
-# - name: change group ownership of rbenv_root dir
-#   file:
-#     path: "{{bossjones__kolide__rbenv_root}}"
-#     recurse: yes
-#     group: "rbenvgrp"
-#     owner: "nobody"
-
-# - name: mkdir ~/.kolide
-#   file:
-#     path: "~{{bossjones__kolide__user}}/.kolide"
-#     state: "directory"
-
-# # - name: change group ownership of rbenv_root dir
-# #   file:
-# #     src: files/install_kolide.sh
-# #     path: "{{bossjones__kolide__user}}/install_kolide.sh"
-# #     mode: 0755
-
-# - name: install script
-#   template:
-#       dest: "~{{bossjones__kolide__user}}/install_kolide.sh"
-#       src: install_kolide.sh
-#       mode: 0755
-
-# - name: kolide zsh.yml
-#   template:
-#       dest: "~{{bossjones__kolide__user}}/.kolide/zsh.yml"
-#       src: zsh.yml
-#       owner: "{{bossjones__kolide__user}}"
-#       group: "{{bossjones__kolide__user}}"
-
-# - name: Check groups that user belongs to already
-#   shell: "~{{bossjones__kolide__user}}/install_kolide.sh"
-#   become: yes
-#   become_user: "{{bossjones__kolide__user}}"
-#   register: install_kolide_res
-
-# - debug:
-#     var: install_kolide_res.stdout
+- name: init
+  include: init.yml
+- name: init
+  include: redis.yml
+- name: init
+  include: mysql.yml
+- name: init
+  include: kolide.yml

@@ -487,3 +487,5 @@ ansible-role-tmuxinator
 ansible-role-oh-my-zsh
 zzet.rbenv
 ansible-fail2ban
+ansible-role-osquery
+boss-ansible-role-update-hosts

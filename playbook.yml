@@ -2,6 +2,19 @@
 # sudo ansible-playbook -i "localhost," -c local playbook.yml
 # sudo ansible-playbook -i "localhost," -c local playbook.yml --extra-vars="bossjones__kolide__user=$(whoami)"
 # sudo ansible-playbook --ask-become-pass --check -i "localhost," -c local playbook.yml --extra-vars="bossjones__kolide__user=$(whoami)"
+
+- name: Vault | Decrypt secrets
+  hosts: localhost
+  connection: local
+  pre_tasks:
+    - name: decrypt all secret vars
+      shell: "ansible-vault decrypt {{item}}"
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+      with_fileglob:
+        - "vars/secret/*"
+
 - hosts: localhost
   connection: local
   become: yes
@@ -18,13 +31,13 @@
     rbenv_repo: "https://github.com/rbenv/rbenv.git"
 
     rbenv_plugins:
-      - { name: "rbenv-vars",         repo: "https://github.com/rbenv/rbenv-vars.git",         version: "master" }
-      - { name: "ruby-build",         repo: "https://github.com/rbenv/ruby-build.git",         version: "master" }
+      - { name: "rbenv-vars", repo: "https://github.com/rbenv/rbenv-vars.git", version: "master" }
+      - { name: "ruby-build", repo: "https://github.com/rbenv/ruby-build.git", version: "master" }
       - { name: "rbenv-default-gems", repo: "https://github.com/rbenv/rbenv-default-gems.git", version: "master" }
-      - { name: "rbenv-installer",    repo: "https://github.com/rbenv/rbenv-installer.git",    version: "master" }
-      - { name: "rbenv-update",       repo: "https://github.com/rkh/rbenv-update.git",         version: "master" }
-      - { name: "rbenv-whatis",       repo: "https://github.com/rkh/rbenv-whatis.git",         version: "master" }
-      - { name: "rbenv-use",          repo: "https://github.com/rkh/rbenv-use.git",            version: "master" }
+      - { name: "rbenv-installer", repo: "https://github.com/rbenv/rbenv-installer.git", version: "master" }
+      - { name: "rbenv-update", repo: "https://github.com/rkh/rbenv-update.git", version: "master" }
+      - { name: "rbenv-whatis", repo: "https://github.com/rkh/rbenv-whatis.git", version: "master" }
+      - { name: "rbenv-use", repo: "https://github.com/rkh/rbenv-use.git", version: "master" }
 
     rbenv_root: "{% if rbenv.env == 'system' %}/usr/local/rbenv{% else %}~/.rbenv{% endif %}"
 
@@ -33,50 +46,50 @@
     rbenv_users: []
 
     rbenv_extra_depends:
-    - libssl1.0-dev
-    - build-essential
-    - bison
-    - ruby-dev
-    - rake
-    - zlib1g-dev
-    - libyaml-dev
-    - libssl-dev
-    - libreadline-dev
-    - libncurses5-dev
-    - llvm
-    - llvm-dev
-    - libeditline-dev
-    - libedit-dev
+      - libssl1.0-dev
+      - build-essential
+      - bison
+      - ruby-dev
+      - rake
+      - zlib1g-dev
+      - libyaml-dev
+      - libssl-dev
+      - libreadline-dev
+      - libncurses5-dev
+      - llvm
+      - llvm-dev
+      - libeditline-dev
+      - libedit-dev
     rbenv_apt_packages:
-    - build-essential
-    - curl
-    - git
-    - libcurl4-openssl-dev
-    - libffi-dev
-    - libreadline-dev
-    - libssl-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - zlib1g-dev
+      - build-essential
+      - curl
+      - git
+      - libcurl4-openssl-dev
+      - libffi-dev
+      - libreadline-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - zlib1g-dev
     rbenv_dnf_packages:
-    - curl
-    - gcc
-    - openssl-devel
-    - libyaml-devel
-    - readline-devel
-    - zlib-devel
-    - libffi-devel
-    - git
+      - curl
+      - gcc
+      - openssl-devel
+      - libyaml-devel
+      - readline-devel
+      - zlib-devel
+      - libffi-devel
+      - git
     rbenv_yum_packages:
-    - bzip2
-    - curl
-    - gcc
-    - git
-    - libffi-devel
-    - libyaml-devel
-    - openssl-devel
-    - readline-devel
-    - zlib-devel
+      - bzip2
+      - curl
+      - gcc
+      - git
+      - libffi-devel
+      - libyaml-devel
+      - openssl-devel
+      - readline-devel
+      - zlib-devel
     bossjones__oh__my__zsh__install_fzf: "no"
     bossjones__oh__my__zsh__enable_zlogin: "yes"
     bossjones__oh__my__zsh__enable_zlogout: "yes"
@@ -85,7 +98,6 @@
     bossjones__oh__my__zsh__change_default_shell: no
     bossjones__oh__my__zsh__path_to_shell: /bin/zsh
     bossjones__oh__my__zsh__antigen_bundles_extras:
-      # - nvm
       - joel-porquet/zsh-dircolors-solarized
       - mollifier/anyframe
       - zdharma/fast-syntax-highlighting
@@ -99,23 +111,11 @@
       - { name: autopep8, command: autopep8 }
       - { name: pipenv, command: pipenv }
       - { name: pylint, command: pylint }
-      # - { name: lukechilds/zsh-nvm, command: nvm }
-      # - { name: Sparragus/zsh-auto-nvm-use, command: nvm }
       - { name: ELLIOTTCABLE/rbenv.plugin.zsh, command: ruby }
-      # - { name: ELLIOTTCABLE/rbenv.plugin.zsh, command: ruby }
       - { name: colored-man-pages, command: man }
       - { name: srijanshetty/node.plugin.zsh, command: node }
-      # - osx
-      # - gmatheu/zsh-explain-shell
-      # - hacker-quotes
       - { name: bossjones/boss-git-zsh-plugin, command: git }
       - { name: bossjones/boss-docker-zsh-plugin, command: docker }
-      # SOURCE: https://github.com/droctothorpe/kubecolor
-      # - droctothorpe/kubecolor
-      # - amstrad/oh-my-matrix
-      #############################################################################################################################
-      # SOURCE: https://github.com/luismayta/dotfiles/blob/597ddc09e1bfccc43076ca21cb679299b83912e4/conf/shell/zshrc
-      #############################################################################################################################
       # A zsh plugin to sync git repositories and clean them up.
       - caarlos0/zsh-git-sync
 
@@ -136,46 +136,15 @@
       # Search ssh connect with peco
       - { name: luismayta/zsh-peco-ssh-connect, command: peco }
 
-      # - luismayta/zsh-gvm
-      # - luismayta/zsh-nvm
-      # - luismayta/zsh-rvm
-      # - luismayta/zsh-rust
-      # - luismayta/zsh-pyenv
-      # - igoradamenko/jira.plugin.zsh
-
-
       # Plugin for lazy-loading pyenv in zsh.
       - { name: erikced/zsh-pyenv-lazy-load, command: pyenv }
       - { name: vagrant, command: vagrant }
 
-      # A zsh plugin for lazy loading of pyenv-virtualenv. The initial eval "$(pyenv virtualenv-init -)" is executed the first time pyenv-virtualenv is called.
-      # - { name: kadaan/zsh-pyenv-virtualenv-lazy, command: pyenv }
-
-      # - luismayta/zsh-transfer
-      # - luismayta/zsh-flutter
-
       # This ZSH plugin enhances the terminal environment with 256 colors. It looks at the chosen TERM environment variable and sees if there is respective (n-)curses' termcap/terminfo descriptors for 256 colors available. The result is a multicolor terminal, if available.
       - chrissicool/zsh-256color
-      # - wbinglee/zsh-wakatime
-
-      # # Additional completion definitions for Zsh.
-      # - zsh-users/zsh-completions
-      # # - wwilsman/zsh-clean-project
 
       # Convert seconds to a human readable string: 165392 → 1d 21h 56m 32s
       - sindresorhus/pretty-time-zsh
-
-      # Search shell history with peco when pressing ctrl+r.
-      # - jimeh/zsh-peco-history
-      # ZSH port of Fish history search (up arrow)
-      # - zsh-users/zsh-history-substring-search
-
-      # Pretty, minimal and fast ZSH prompt
-      # - sindresorhus/pure
-
-    # bossjones__oh__my__zsh__hotkeys_extras:
-    # - { hotkey: '^[[3~', action: delete-char }
-    # - { hotkey: '^[3;5~', action: delete-char }
 
     bossjones__oh__my__zsh__autosuggestions_bind_key: "^U"
     bossjones__oh__my__zsh__path:
@@ -192,19 +161,6 @@
       - /bin
       - /usr/games
       - /usr/local/games
-
-    # SOURCE: https://github.com/sorin-ionescu/prezto/blob/4f19700919c8ebbaf75755fc0d03716d13183f49/runcoms/zshenv
-    # #
-    # # Defines environment variables.
-    # #
-    # # Authors:
-    # #   Sorin Ionescu <sorin.ionescu@gmail.com>
-    # #
-
-    # # Ensure that a non-login, non-interactive shell has a defined environment.
-    # if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-    #   source "${ZDOTDIR:-$HOME}/.zprofile"
-    # fi
 
     bossjones__oh__my__zsh__zlogin: |-
       # https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
@@ -296,11 +252,6 @@
       export RBENV_VERSION=2.5.1
       export VIRTUAL_ENV_DISABLE_PROMPT=1
       export ZSH_PYENV_LAZY_VIRTUALENV=1
-      # OS X nvm load
-      # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . /usr/local/opt/nvm/nvm.sh # This loads nvm
-      # export NVM_LAZY_LOAD=true
-      # export NVM_AUTO_USE=true
-
 
       # set some history options
       setopt append_history
@@ -330,15 +281,6 @@
       export LANG=en_US.UTF-8
       export LC_ALL=en_US.UTF-8
 
-      # # SOURCE: https://github.com/luismayta/dotfiles/blob/597ddc09e1bfccc43076ca21cb679299b83912e4/conf/shell/zshrc
-      # # don't put duplicate lines in the history. See bash(1) for more options
-      # # ... or force ignoredups and ignorespace
-      # HISTCONTROL=ignoredups:ignorespace
-
-      # # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-      # HISTSIZE=100000
-      # HISTFILESIZE=2000
-
       alias reload!='exec "$SHELL" -l'
 
       # setopt HIST_FIND_NO_DUPS
@@ -362,13 +304,11 @@
       # zstyle ':completion:*' cache-path ~/.zsh/cache
       # zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
 
-
       if [ -n "$(which direnv)" ]; then
           eval "$(direnv hook zsh)"
       fi
 
       [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
       # remove dupes from $PATH using a zsh builtin
       # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
@@ -391,10 +331,6 @@
       bindkey " " globalias
       bindkey "^ " magic-space           # control-space to bypass completion
       bindkey -M isearch " " magic-space # normal space during searches
-
-      # if [[ $TMUX ]]; then
-      #   exec zsh -l
-      # fi
 
   pre_tasks:
     - name: Install/Setup zsh
@@ -428,7 +364,69 @@
 
 - hosts: localhost
   connection: local
+  gather_facts: True
   become: true
+  strategy: free
+  pre_tasks:
+    - ping:
+    - name: dynamically include vars directory (recursively)
+      include_vars:
+        dir: "vars/secret"
+        ignore_unknown_extensions: True
+        extensions: ['', 'yaml', 'yml', 'json', 'vault']
+      no_log: True
   roles:
     - ../ansible-role-kolide
+    - role: ../ansible-role-osquery
+      fleet_hostname: ubuntu-kolide
+      graylog_hostname: ubuntu-kolide
 
+
+  post_tasks:
+    # Now that everything has been re-run w/ cluster specific values, lets go ahead and enable everything we care about
+    - name: reload systemd configuration
+      become: yes
+      command: systemctl daemon-reload
+
+    - name: Handle errors for osquery
+      block:
+        # Restart service and ensure it is enabled
+        - name: start and enable osquery
+          become: yes
+          service: name=osqueryd state=restarted enabled=yes
+      rescue:
+        - name: encrypt all secret vars
+          shell: "journalctl --no-pager --since today -u osqueryd.service"
+          ignore_errors: yes
+          changed_when: false
+          failed_when: false
+          register: journalctl_result
+
+        - name: Debug | journalctl dump
+          debug:
+            var: journalctl_result.stdout
+      always:
+        - name: encrypt all secret vars
+          shell: "journalctl --no-pager --since today -u osqueryd.service"
+          ignore_errors: yes
+          changed_when: false
+          failed_when: false
+          register: journalctl_result
+
+        - name: Debug | journalctl dump
+          debug:
+            var: journalctl_result.stdout
+
+- name: Prepare | re encrypt values
+  hosts: localhost
+  connection: local
+  environment:
+    ANSIBLE_VAULT_PASSWORD_FILE: ~/.vault_password_personal.txt
+  pre_tasks:
+    - name: encrypt all secret vars
+      shell: "ansible-vault encrypt {{item}}"
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+      with_fileglob:
+        - "vars/secret/*"
