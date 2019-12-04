@@ -489,3 +489,4 @@ zzet.rbenv
 ansible-fail2ban
 ansible-role-osquery
 boss-ansible-role-update-hosts
+boss-ansible-role-sysctl
